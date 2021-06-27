@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "anki_scripts"
+version = "0.1.0"
+description = "A set of scripts to extract, prepare, and make anki flashcards from various sources."
+authors = ["yshalsager <ysh-alsager@hotmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+beautifulsoup4 = "^4.9.3"
+requests = "^2.25.1"
+PyYAML = "^5.4.1"
+click = "^8.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
