@@ -1,13 +1,16 @@
 from pathlib import Path
 from typing import Union
 
-from bs4 import BeautifulSoup, Tag, ResultSet
+from bs4 import BeautifulSoup
+from bs4.element import Tag, ResultSet
 
+from anki_scripts.extractors.base import BaseExtractor
 from anki_scripts.models.quiz import Quiz, Question
 
 
-class TelegramExtractor:
+class TelegramExtractor(BaseExtractor):
     def __init__(self, exported_telegram_dir_path: Union[str, Path]):
+        super().__init__()
         self.exported_telegram_data_path = exported_telegram_dir_path if isinstance(
             exported_telegram_dir_path, Path) else Path(exported_telegram_dir_path)
         self.html_files = self.exported_telegram_data_path.glob('*.html')
