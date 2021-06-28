@@ -9,6 +9,9 @@ class Question:
         else:
             self.answers = answers + [""] * (6 - len(answers))
         self.correct_answer = ' '.join(['1' if correct_answer == i else '0' for i in answers]) if correct_answer else ""
+        # hardcoded value for single choice question in the following anki template
+        # https://ankiweb.net/shared/info/1566095810
+        self.question_type = '2'
 
     def __repr__(self):
         return f"<Question(question={self.question}, answers={self.answers}, correct_answer={self.correct_answer})>"
