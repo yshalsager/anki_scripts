@@ -38,8 +38,9 @@ class GoogleFormExtractor(BaseExtractor):
             chosen_answer = quiz_question.select_one(self._correct_answer_selector)
             if chosen_answer:
                 chosen_answer = chosen_answer.text.strip()
+            # TODO: Add support for multiple correct answers
             quiz_questions_list.append(Question(question.text.strip(), answers,
-                                                correct_answer=chosen_answer))
+                                                correct_answers=[chosen_answer]))
         return Quiz(quiz_questions_list)
 
     def __repr__(self):

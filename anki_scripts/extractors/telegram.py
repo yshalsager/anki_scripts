@@ -31,13 +31,16 @@ class TelegramExtractor(BaseExtractor):
                 answers: ResultSet = quiz_question.select(self._answer_selector)
                 chosen_answer = list(filter(lambda x: x if self._chosen_answer_text in x.text else None, answers))
                 if chosen_answer:
-                    chosen_answer[0].span.decompose()
-                    chosen_answer = chosen_answer[0]
+                    for i in chosen_answer:
+                        i.span.decompose()
                 for answer in answers:
                     if answer.span:
                         answer.span.decompose()
-                quiz_questions_list.append(Question(question.text.strip(), [i.text.strip() for i in answers],
-                                                    correct_answer=chosen_answer.text.strip()))
+                quiz_questions_list.append(
+                    Question(question.text.strip(),
+                             [i.text.strip() for i in answers],
+                             correct_answers=[i.text.strip() for i in chosen_answer])
+                )
         return Quiz(quiz_questions_list)
 
     def __repr__(self):
