@@ -22,18 +22,6 @@ pip install .
 
 ## Usage
 
-```bash
-python3 -m anki_scripts tg-extract --help
-Usage: python -m anki_scripts tg-extract [OPTIONS] TELEGRAM_EXPORT_PATH
-
-  Extract quiz questions from Telegram exported HTML
-
-Options:
-  -e, --export [CSV|JSON|YAML]
-  -o, --output PATH
-  --help                        Show this message and exit.
-```
-
 **Notes:**
 
 - You can specify the export file type by using -e option. CSV will be used if you didn't select any choice.
@@ -45,6 +33,18 @@ Options:
   answer 5.
 
 ### Extracting Telegram Quiz:
+
+```bash
+python3 -m anki_scripts tg-extract --help
+Usage: python -m anki_scripts tg-extract [OPTIONS] TELEGRAM_EXPORT_PATH
+
+  Extract quiz questions from Telegram exported HTML
+
+Options:
+  -e, --export [CSV|JSON|YAML]
+  -o, --output PATH
+  --help                        Show this message and exit.
+```
 
 - Using Telegram for Desktop, forward quiz questions you would like to export to an empty chat then export the chat into
   HTML.
@@ -60,6 +60,18 @@ python3 -m anki_scripts tg-extract "/home/yshalsager/Downloads/Telegram Desktop/
 - Selected quiz answer will be considered as the correct answer.
 
 ### Extracting Google Forms Quiz:
+
+```bash
+python -m anki_scripts gf-extract --help
+Usage: python -m anki_scripts gf-extract [OPTIONS] FORM_URL
+
+  Extract quiz questions from Google form URL
+
+Options:
+  -e, --export [CSV|JSON|YAML]
+  -o, --output PATH
+  --help                        Show this message and exit.
+```
 
 - Run gf-extract command with Google Form URL. If you provided an answered form URL the tool will extract correct
   answers too.
