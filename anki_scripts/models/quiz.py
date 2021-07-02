@@ -2,7 +2,7 @@ from typing import List
 
 
 class Question:
-    def __init__(self, question: str, answers: List[str], correct_answers=None):
+    def __init__(self, question: str, answers: List[str], correct_answers=None, feedback=None):
         self.question = question
         if len(answers) == 5:
             self.answers = answers
@@ -13,6 +13,7 @@ class Question:
         # 1 for multiple choice and 2 single choice question. Used with the following anki template
         # https://ankiweb.net/shared/info/1566095810
         self.question_type = '1' if len(correct_answers) > 1 else '2'
+        self.feedback = feedback if feedback else ""
 
     def __repr__(self):
         return f"<Question(question={self.question}, answers={self.answers}, correct_answer={self.correct_answers})>"

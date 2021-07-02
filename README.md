@@ -29,7 +29,7 @@ pip install .
   python package parent directory.
 - The export tool is optimized for Anki Multiple Choice template which is
   available [here](https://ankiweb.net/shared/info/1566095810).
-- Exported CSV file columns are: question, question type, correct answers, answer 1, answer 2, answer 3, answer 4,
+- Exported CSV file columns are: question, question type, correct answers, feedback, answer 1, answer 2, answer 3, answer 4,
   answer 5.
 
 ### Extracting Telegram Quiz:

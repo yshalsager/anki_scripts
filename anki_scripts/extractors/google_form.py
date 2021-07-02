@@ -21,6 +21,7 @@ class GoogleFormExtractor(BaseExtractor):
         self._correct_answer_selector = f".freebirdFormviewerViewItemsRadioCorrect {self._answer_selector}, " \
                                         f".freebirdFormviewerViewItemsItemGradingCorrectAnswerBox " \
                                         f"{self._answer_selector}"
+        self._feedback_selector = f".freebirdFormviewerViewItemsItemGradingFeedbackText"
 
     def extract_quiz_questions(self):
         quiz_questions_list = []
@@ -39,8 +40,11 @@ class GoogleFormExtractor(BaseExtractor):
             if chosen_answer:
                 chosen_answer = chosen_answer.text.strip()
             # TODO: Add support for multiple correct answers
-            quiz_questions_list.append(Question(question.text.strip(), answers,
-                                                correct_answers=[chosen_answer]))
+            feedback_text = quiz_question.select_one(self._feedback_selector)
+            if feedback_text:
+                feedback_text = feedback_text.text.strip()
+            quiz_questions_list.append(
+                Question(question.text.strip(), answers, correct_answers=[chosen_answer], feedback=feedback_text))
         return Quiz(quiz_questions_list)
 
     def __repr__(self):
