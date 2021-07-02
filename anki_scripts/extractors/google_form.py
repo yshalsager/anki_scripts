@@ -32,10 +32,14 @@ class GoogleFormExtractor(BaseExtractor):
             if question.span:
                 # Remove the asterisk (freebirdFormviewerComponentsQuestionBaseRequiredAsterisk)
                 question.span.decompose()
-            answers: ResultSet = quiz_question.select(self._answer_selector)
-            answers: List[str] = list(set(
-                [i.text.strip() for i in answers]
-            ))  # Remove duplicate answer (in correct answer box)
+            answers_html: ResultSet = quiz_question.select(self._answer_selector)
+            answers = []
+            for answer in answers_html:
+                answer_text = answer.text.strip()
+                if answer_text in answers:
+                    # Skip duplicate answer (in correct answer box)
+                    continue
+                answers.append(answer_text)
             chosen_answer = quiz_question.select_one(self._correct_answer_selector)
             if chosen_answer:
                 chosen_answer = chosen_answer.text.strip()
