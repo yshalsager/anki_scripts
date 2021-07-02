@@ -14,12 +14,13 @@ class GoogleFormExtractor(BaseExtractor):
         self.url = url
         self._resp = get(url)
         self.html = BeautifulSoup(self._resp.text, "html.parser")
-        self._quiz_selector = '.freebirdFormviewerComponentsQuestionBaseRoot, div[role="listitem"]'
+        self._quiz_selector = '.freebirdFormviewerComponentsQuestionBaseRoot, .freebirdFormviewerViewItemsItemItem'
         self._question_selector = ".freebirdFormviewerComponentsQuestionBaseTitle, " \
                                   ".freebirdFormviewerViewItemsItemItemTitle"
         self._answer_selector = "span.docssharedWizToggleLabeledLabelText"
         self._correct_answer_selector = f".freebirdFormviewerViewItemsRadioCorrect {self._answer_selector}, " \
                                         f".freebirdFormviewerViewItemsItemGradingCorrectAnswerBox " \
+                                        f"{self._answer_selector}, .freebirdFormviewerViewItemsCheckboxCorrect " \
                                         f"{self._answer_selector}"
         self._feedback_selector = f".freebirdFormviewerViewItemsItemGradingFeedbackText"
 
@@ -40,15 +41,14 @@ class GoogleFormExtractor(BaseExtractor):
                     # Skip duplicate answer (in correct answer box)
                     continue
                 answers.append(answer_text)
-            chosen_answer = quiz_question.select_one(self._correct_answer_selector)
-            if chosen_answer:
-                chosen_answer = chosen_answer.text.strip()
-            # TODO: Add support for multiple correct answers
+            chosen_answers = quiz_question.select(self._correct_answer_selector)
+            if chosen_answers:
+                chosen_answers = [i.text.strip() for i in chosen_answers]
             feedback_text = quiz_question.select_one(self._feedback_selector)
             if feedback_text:
                 feedback_text = feedback_text.text.strip()
             quiz_questions_list.append(
-                Question(question.text.strip(), answers, correct_answers=[chosen_answer], feedback=feedback_text))
+                Question(question.text.strip(), answers, correct_answers=chosen_answers, feedback=feedback_text))
         return Quiz(quiz_questions_list)
 
     def __repr__(self):
