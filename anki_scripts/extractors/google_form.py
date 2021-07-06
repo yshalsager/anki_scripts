@@ -30,6 +30,8 @@ class GoogleFormExtractor(BaseExtractor):
         quiz_question: Tag
         for quiz_question in quiz_questions:
             question = quiz_question.select_one(self._question_selector)
+            if not question:
+                continue
             if question.span:
                 # Remove the asterisk (freebirdFormviewerComponentsQuestionBaseRequiredAsterisk)
                 question.span.decompose()
